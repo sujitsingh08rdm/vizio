@@ -128,3 +128,7 @@
     @apply font-sans;
   }
 }
+
+.capitalize-first::first-letter {
+  text-transform: uppercase;
+}

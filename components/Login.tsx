@@ -21,14 +21,44 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import Link from "next/link";
+import { UserInterface } from "./Signup";
+import httpRequest from "@/lib/http";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
+  const [user, setUser] = useState<UserInterface | null>(null);
   const [sent, setSent] = useState(false);
-  const login = (values: any) => {
-    console.log(values);
+  const router = useRouter();
+
+  const login = async (values: any) => {
+    try {
+      await httpRequest.post("/auth/send-otp", values);
+      setUser(values);
+      setSent(true);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      }
+    }
   };
-  const veifyOtp = (values: any) => {
-    console.log(values);
+
+  const verifyOtp = async (values: any) => {
+    try {
+      if (!user) {
+        return;
+      }
+      const payload = {
+        mobile: user.mobile,
+        otp: values.otp,
+      };
+
+      await httpRequest.post("/auth/verify-otp", payload);
+      router.replace("/app");
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      }
+    }
   };
 
   return (
@@ -42,9 +72,9 @@ const Login = () => {
             <CardDescription>Check your mobile phone</CardDescription>
           </CardHeader>
           <CardContent>
-            <Form onFinish={veifyOtp}>
+            <Form onFinish={verifyOtp}>
               <Form.Item name="otp" rules={[{ required: true }]}>
-                <InputOTP maxLength={4} defaultValue="123456">
+                <InputOTP maxLength={4}>
                   <InputOTPGroup>
                     <InputOTPSlot index={0} className="p-6" />
                     <InputOTPSlot index={1} className="p-6" />

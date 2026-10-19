@@ -64,7 +64,8 @@
     "sonner": "^2.0.5",
     "tailwind-merge": "^3.3.1",
     "vaul": "^1.1.2",
-    "video.js": "^8.23.3",
+    "video.js": "^8.24.2",
+    "videojs-contrib-quality-levels": "^4.1.0",
     "videojs-hls-quality-selector": "^2.0.0",
     "videojs-hotkeys": "^0.2.30",
     "zod": "^3.25.67"

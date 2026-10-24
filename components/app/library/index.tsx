@@ -14,7 +14,7 @@ import {
   Progress,
   message,
 } from "antd";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import moment from "moment";
 import useSWR, { mutate } from "swr";
 import { fetcher } from "@/lib/fetcher";
@@ -25,6 +25,7 @@ import { catchError } from "@/lib/catch-error";
 import httpRequest from "@/lib/http";
 import axios from "axios";
 import { durationCalculator, sizeCalculator } from "@/lib/calc";
+import { webSocket } from "../app-layout";
 
 const Library = () => {
   const [videoForm] = Form.useForm();
@@ -33,6 +34,19 @@ const Library = () => {
   const [open, setOpen] = useState(false);
   const [progress, setProgress] = useState(0);
   const [file, setFile] = useState<File | null>(null);
+
+  const onVideoTranscoding = () => {
+    mutate(`/video?page=${page}&limit=${limit}`);
+  };
+
+  useEffect(() => {
+    webSocket.on("video-transcoding", onVideoTranscoding);
+
+    return () => {
+      webSocket.off("video-transcoding", onVideoTranscoding);
+    };
+  }, []);
+
   const { data, error, isLoading } = useSWR(
     `/video?page=${page}&limit=${limit}`,
     fetcher,

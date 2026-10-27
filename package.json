@@ -59,6 +59,7 @@
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.58.1",
     "react-phone-input-2": "^2.15.1",
+    "react-player": "^3.4.0",
     "react-resizable-panels": "^3.0.3",
     "recharts": "^3.0.0",
     "remixicon": "^4.6.0",

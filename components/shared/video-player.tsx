@@ -31,7 +31,7 @@ interface VideoPlayerInterface {
   src: string;
 }
 
-const VideoPlayer: FC<VideoPlayerInterface> = ({ src }) => {
+const VideoJSPlayer: FC<VideoPlayerInterface> = ({ src }) => {
   // A ref to a plain <div>. React gives us this real DOM node after rendering,
   // and we'll use it as the container into which we insert the <video> tag.
   const videoRef = useRef<HTMLDivElement | null>(null);
@@ -163,4 +163,4 @@ const VideoPlayer: FC<VideoPlayerInterface> = ({ src }) => {
 };
 
 // Default export so other files can do: import VideoPlayer from "./video-player"
-export default VideoPlayer;
+export default VideoJSPlayer;
